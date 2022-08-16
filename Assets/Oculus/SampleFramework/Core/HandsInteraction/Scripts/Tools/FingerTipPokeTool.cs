@@ -36,7 +36,7 @@ namespace OculusSampleFramework
 		private const int NUM_VELOCITY_FRAMES = 10;
 
 		[SerializeField] private FingerTipPokeToolView _fingerTipPokeToolView = null;
-		[SerializeField] private OVRPlugin.HandFinger _fingerToFollow = OVRPlugin.HandFinger.Index;
+		[SerializeField] public OVRPlugin.HandFinger _fingerToFollow = OVRPlugin.HandFinger.Index;
 
 		public override InteractableToolTags ToolTags
 		{
