@@ -8,6 +8,38 @@ public class SliderController : MonoBehaviour
 {
     public Slider videoSlider;
     public VideoPlayer player;
+    public VideoClip[] videoClips;
+
+    public void SelectVideoClip(int i)
+    {
+        switch (i)
+        {
+            case 0:
+                player.Stop(); 
+                break;
+            case 1:
+                player.Stop();
+                player.clip = videoClips[0];
+                player.time = 0;
+                videoSlider.maxValue = (float)player.clip.length;
+                player.Play();
+                break;
+            case 2:
+                player.Stop();
+                player.clip = videoClips[1];
+                player.time = 0;
+                videoSlider.maxValue = (float)player.clip.length;
+                player.Play();
+                break;
+            case 3:
+                player.Stop();
+                player.clip = videoClips[2];
+                player.time = 0;
+                videoSlider.maxValue = (float)player.clip.length;
+                player.Play();
+                break;
+        }
+    }
     
     public void UpdateSliderPosition()
     {
@@ -17,7 +49,7 @@ public class SliderController : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        videoSlider.maxValue = (float)player.clip.length;
+        
     }
 
     // Update is called once per frame
