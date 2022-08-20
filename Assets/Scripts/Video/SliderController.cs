@@ -59,5 +59,13 @@ public class SliderController : MonoBehaviour
         {
             videoSlider.value = (float)player.time;
         }
+
+        if (Input.GetKeyDown(KeyCode.Space))
+        {
+            player.clip = videoClips[0];
+            player.time = 0;
+            videoSlider.maxValue = (float)player.clip.length;
+            player.Play();
+        }
     }
 }
