@@ -10,6 +10,8 @@ public class SliderController : MonoBehaviour
     public VideoPlayer player;
     public VideoClip[] videoClips;
 
+    public RecordAudio recordAudioScript;
+
     public void SelectVideoClip(int i)
     {
         switch (i)
@@ -66,6 +68,7 @@ public class SliderController : MonoBehaviour
             player.time = 0;
             videoSlider.maxValue = (float)player.clip.length;
             player.Play();
+            recordAudioScript.RecordMicAudio();
         }
     }
 }
