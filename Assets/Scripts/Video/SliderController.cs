@@ -14,6 +14,8 @@ public class SliderController : MonoBehaviour
 
     public void SelectVideoClip(int i)
     {
+        recordAudioScript.isPLaying = true;
+
         switch (i)
         {
             case 0:
@@ -64,6 +66,7 @@ public class SliderController : MonoBehaviour
 
         if (Input.GetKeyDown(KeyCode.Space))
         {
+            recordAudioScript.isPLaying = true;
             player.clip = videoClips[0];
             player.time = 0;
             videoSlider.maxValue = (float)player.clip.length;
