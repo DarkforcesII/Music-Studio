@@ -10,11 +10,11 @@ public class SliderController : MonoBehaviour
     public VideoPlayer player;
     public VideoClip[] videoClips;
 
-    public RecordAudio recordAudioScript;
+    public AudioRecorder audioRecorderScript;
 
     public void SelectVideoClip(int i)
     {
-        recordAudioScript.isPLaying = true;
+        audioRecorderScript.isPLaying = true;
 
         switch (i)
         {
@@ -50,12 +50,6 @@ public class SliderController : MonoBehaviour
         player.time = videoSlider.value;
     }
 
-    // Start is called before the first frame update
-    void Start()
-    {
-        
-    }
-
     // Update is called once per frame
     void Update()
     {
@@ -66,12 +60,12 @@ public class SliderController : MonoBehaviour
 
         if (Input.GetKeyDown(KeyCode.Space))
         {
-            recordAudioScript.isPLaying = true;
+            audioRecorderScript.isPLaying = true;
             player.clip = videoClips[0];
             player.time = 0;
             videoSlider.maxValue = (float)player.clip.length;
             player.Play();
-            recordAudioScript.RecordMicAudio();
+            audioRecorderScript.RecordMicAudio();
         }
     }
 }

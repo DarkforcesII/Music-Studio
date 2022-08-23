@@ -2,11 +2,13 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Video;
+using UnityEngine.UI;
 
-public class RecordAudio : MonoBehaviour
+public class AudioRecorder : MonoBehaviour
 {
 
     public VideoPlayer player;
+    public Slider videoSlider;
 
     public AudioSource[] audioSources;
     public AudioClip[] sunnyClips;
@@ -15,10 +17,28 @@ public class RecordAudio : MonoBehaviour
 
     public bool isPLaying = false;
 
-    // Start is called before the first frame update
-    void Start()
+    public void PauseMusic()
     {
-       
+        for (int i = 1; i < audioSources.Length; i++)
+        {
+            audioSources[i].Pause();
+        }
+    }
+
+    public void UnpauseMusic()
+    {
+        for (int i = 1; i < audioSources.Length; i++)
+        {
+            audioSources[i].Play();
+        }
+    }
+
+    public void UpdateMusicPosition()
+    {
+        for (int i = 1; i < audioSources.Length; i++)
+        {
+            audioSources[i].time = videoSlider.value;
+        }
     }
 
     private void Update()
@@ -51,22 +71,22 @@ public class RecordAudio : MonoBehaviour
                 case "Sunny":
                     for (int i = 0; i < sunnyClips.Length; i++)
                     {
-                        audioSources[i].clip = sunnyClips[i];
-                        audioSources[i].Play();
+                        audioSources[i + 1].clip = sunnyClips[i];
+                        audioSources[i + 1].Play();
                     }
                     break;
                 case "Staffroll":
                     for (int i = 0; i < staffrollClips.Length; i++)
                     {
-                        audioSources[i].clip = staffrollClips[i];
-                        audioSources[i].Play();
+                        audioSources[i + 1].clip = staffrollClips[i];
+                        audioSources[i + 1].Play();
                     }
                     break;
                 case "Attraction":
                     for (int i = 0; i < attractionClips.Length; i++)
                     {
-                        audioSources[i].clip = attractionClips[i];
-                        audioSources[i].Play();
+                        audioSources[i + 1].clip = attractionClips[i];
+                        audioSources[i + 1].Play();
                     }
                     break;
             }
