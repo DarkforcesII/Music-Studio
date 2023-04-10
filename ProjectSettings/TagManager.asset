@@ -3,7 +3,37 @@
 --- !u!78 &1
 TagManager:
   serializedVersion: 2
-  tags: []
+  tags:
+  - 14
+  - 21
+  - 5
+  - 0
+  - 23
+  - 9
+  - 20
+  - 16
+  - 12
+  - 2
+  - 18
+  - 10
+  - 4
+  - 3
+  - 7
+  - 17
+  - 11
+  - 13
+  - 19
+  - 8
+  - 1
+  - 22
+  - 15
+  - 6
+  - Door
+  - F_0
+  - F_1
+  - F_2
+  - F_3
+  - F_4
   layers:
   - Default
   - TransparentFX

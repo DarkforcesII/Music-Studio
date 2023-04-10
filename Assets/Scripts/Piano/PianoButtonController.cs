@@ -52,7 +52,7 @@ namespace OculusSampleFramework
 			DataManager.Instance.keyCounter = objectTag;
 		}
 
-		public override int ValidToolTagsMask
+        public override int ValidToolTagsMask
 		{
 			get
 			{

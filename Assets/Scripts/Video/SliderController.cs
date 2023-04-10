@@ -42,6 +42,13 @@ public class SliderController : MonoBehaviour
                 videoSlider.maxValue = (float)player.clip.length;
                 player.Play();
                 break;
+            case 4:
+                player.Stop();
+                player.clip = videoClips[3];
+                player.time = 0;
+                videoSlider.maxValue = (float)player.clip.length;
+                player.Play();
+                break;
         }
     }
     

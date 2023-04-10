@@ -6,6 +6,7 @@ using UnityEngine.Assertions;
 using UnityEngine.UI;
 using UniOSC;
 using System;
+using Bhaptics.SDK2;
 
 public class CustomPianoController : MonoBehaviour
 {
@@ -42,7 +43,11 @@ public class CustomPianoController : MonoBehaviour
         if (obj.NewInteractableState == InteractableState.ActionState)
         {
             FindPianoKey();
-            dispatcher.SendOSCMessageDown();
+            // turn on in order to send osc signal to phone to vibrate
+            //dispatcher.SendOSCMessageDown();
+            // turn on for haptic gloves
+            //BhapticsLibrary.Play(BhapticsEvent.HAND_LEFT);
+            //BhapticsLibrary.Play(BhapticsEvent.HAND_RIGHT);
             Octave3Keys();
             Octave4Keys();
             pianoSource.PlayOneShot(noteClips[DataManager.Instance.keyCounter]);

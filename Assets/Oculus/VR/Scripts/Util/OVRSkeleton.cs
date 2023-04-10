@@ -310,6 +310,7 @@ public class OVRSkeleton : MonoBehaviour
 
 			for (int i = 0; i < _capsules.Count; ++i)
 			{
+
 				OVRBone bone = _bones[_skeleton.BoneCapsules[i].BoneIndex];
 				OVRBoneCapsule capsule = _capsules[i] ?? (_capsules[i] = new OVRBoneCapsule());
 				capsule.BoneIndex = _skeleton.BoneCapsules[i].BoneIndex;
@@ -321,6 +322,11 @@ public class OVRSkeleton : MonoBehaviour
 					capsule.CapsuleRigidbody.isKinematic = true;
 					capsule.CapsuleRigidbody.useGravity = false;
 					capsule.CapsuleRigidbody.collisionDetectionMode = CollisionDetectionMode.ContinuousSpeculative;
+
+					if (gameObject.name.Contains("Left"))
+                    {
+						capsule.CapsuleRigidbody.name += "_Left";
+                    }
 				}
 
 				GameObject rbGO = capsule.CapsuleRigidbody.gameObject;
