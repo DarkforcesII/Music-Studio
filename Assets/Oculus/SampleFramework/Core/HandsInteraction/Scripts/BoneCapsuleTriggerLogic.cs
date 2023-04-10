@@ -21,6 +21,7 @@
 
 using System.Collections.Generic;
 using UnityEngine;
+using Bhaptics.SDK2;
 
 namespace OculusSampleFramework
 {
@@ -35,10 +36,18 @@ namespace OculusSampleFramework
 		public HashSet<ColliderZone> CollidersTouchingUs = new HashSet<ColliderZone>();
 		private List<ColliderZone> _elementsToCleanUp = new List<ColliderZone>();
 
-		/// <summary>
-		/// If we get disabled, clear our colliders. Otherwise, on trigger exit may not get called.
-		/// </summary>
-		private void OnDisable()
+		private string _name;
+
+        private void Start()
+        {
+
+			_name = gameObject.name;
+        }
+
+        /// <summary>
+        /// If we get disabled, clear our colliders. Otherwise, on trigger exit may not get called.
+        /// </summary>
+        private void OnDisable()
 		{
 			CollidersTouchingUs.Clear();
 		}
@@ -48,12 +57,99 @@ namespace OculusSampleFramework
 			CleanUpDeadColliders();
 		}
 
+		private void AddHaptics()
+        {
+			BhapticsLibrary.PlayGlove(
+		positionType: PositionType.GloveR,
+		motorValues: new int[6] { 0, 80, 0, 0, 0, 0},
+		playTimeValues: new GlovePlayTime[6] {
+						  GlovePlayTime.None,
+						  GlovePlayTime.TwentyMS,
+						  GlovePlayTime.None, 
+						  GlovePlayTime.None, 
+			              GlovePlayTime.None, 
+					      GlovePlayTime.None},
+		shapeValues: new GloveShapeValue[6] { 0, GloveShapeValue.LinearIncrease, 0, 0, 0, 0});
+		}
+
 		private void OnTriggerEnter(Collider other)
 		{
 			var triggerZone = other.GetComponent<ButtonTriggerZone>();
 			if (triggerZone != null && (triggerZone.ParentInteractable.ValidToolTagsMask & (int)ToolTags) != 0)
 			{
 				CollidersTouchingUs.Add(triggerZone);
+
+				// triggers haptics
+				switch (name)
+				{
+					case "Hand_Thumb3_CapsuleRigidbody":
+						BhapticsLibrary.PlayGlove(
+		positionType: PositionType.GloveR,
+		motorValues: new int[6] { 80, 0, 0, 0, 0, 0 },
+		playTimeValues: new GlovePlayTime[6] {
+						  GlovePlayTime.TwentyMS,
+						  GlovePlayTime.None,
+						  GlovePlayTime.None,
+						  GlovePlayTime.None,
+						  GlovePlayTime.None,
+						  GlovePlayTime.None},
+		shapeValues: new GloveShapeValue[6] { GloveShapeValue.LinearIncrease, 0, 0, 0, 0, 0 });
+						break;
+					case "Hand_Index3_CapsuleRigidbody":
+						BhapticsLibrary.PlayGlove(
+		positionType: PositionType.GloveR,
+		motorValues: new int[6] { 0, 80, 0, 0, 0, 0 },
+		playTimeValues: new GlovePlayTime[6] {
+						  GlovePlayTime.None,
+						  GlovePlayTime.TwentyMS,
+						  GlovePlayTime.None,
+						  GlovePlayTime.None,
+						  GlovePlayTime.None,
+						  GlovePlayTime.None},
+		shapeValues: new GloveShapeValue[6] { 0, GloveShapeValue.LinearIncrease, 0, 0, 0, 0 });
+						break;
+					case "Hand_Middle3_CapsuleRigidbody":
+						BhapticsLibrary.PlayGlove(
+		positionType: PositionType.GloveR,
+		motorValues: new int[6] { 0, 0, 80, 0, 0, 0 },
+		playTimeValues: new GlovePlayTime[6] {
+						  GlovePlayTime.None,
+						  0,
+						  GlovePlayTime.TwentyMS,
+						  0,
+						  GlovePlayTime.None,
+						  GlovePlayTime.None},
+		shapeValues: new GloveShapeValue[6] { 0, 0, GloveShapeValue.LinearIncrease, 0, 0, 0 });
+						break;
+					case "Hand_Ring3_CapsuleRigidbody":
+						BhapticsLibrary.PlayGlove(
+		positionType: PositionType.GloveR,
+		motorValues: new int[6] { 0, 0, 0, 80, 0, 0 },
+		playTimeValues: new GlovePlayTime[6] {
+						  GlovePlayTime.None,
+						  0,
+						  0,
+						  GlovePlayTime.TwentyMS,
+						  0,
+						  GlovePlayTime.None},
+		shapeValues: new GloveShapeValue[6] { 0, 0, 0, GloveShapeValue.LinearIncrease, 0, 0 });
+						break;
+					case "Hand_Pinky3_CapsuleRigidbody":
+						BhapticsLibrary.PlayGlove(
+		positionType: PositionType.GloveR,
+		motorValues: new int[6] { 0, 0, 0, 0, 80, 0 },
+		playTimeValues: new GlovePlayTime[6] {
+						  GlovePlayTime.None,
+						  0,
+						  0,
+						  0,
+						  GlovePlayTime.TwentyMS,
+						  GlovePlayTime.None},
+		shapeValues: new GloveShapeValue[6] { 0, 0, 0, 0, GloveShapeValue.LinearIncrease, 0 });
+						break;
+					default:
+						break;
+				}
 			}
 		}
 

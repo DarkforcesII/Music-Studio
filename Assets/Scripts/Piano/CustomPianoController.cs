@@ -46,8 +46,8 @@ public class CustomPianoController : MonoBehaviour
             // turn on in order to send osc signal to phone to vibrate
             //dispatcher.SendOSCMessageDown();
             // turn on for haptic gloves
-            BhapticsLibrary.Play(BhapticsEvent.HAND_LEFT);
-            BhapticsLibrary.Play(BhapticsEvent.HAND_RIGHT);
+            //BhapticsLibrary.Play(BhapticsEvent.HAND_LEFT);
+            //BhapticsLibrary.Play(BhapticsEvent.HAND_RIGHT);
             Octave3Keys();
             Octave4Keys();
             pianoSource.PlayOneShot(noteClips[DataManager.Instance.keyCounter]);

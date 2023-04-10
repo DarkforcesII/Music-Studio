@@ -324,7 +324,7 @@ public class OVRSkeleton : MonoBehaviour
 					capsule.CapsuleRigidbody.collisionDetectionMode = CollisionDetectionMode.ContinuousSpeculative;
 
 					// adding a tag to each capsule
-					capsule.CapsuleRigidbody.tag = "F_" + i.ToString();
+					//capsule.CapsuleRigidbody.tag = "F_" + i.ToString();
 				}
 
 				GameObject rbGO = capsule.CapsuleRigidbody.gameObject;
