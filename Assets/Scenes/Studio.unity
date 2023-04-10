@@ -9110,6 +9110,7 @@ MonoBehaviour:
   - {fileID: 32900000, guid: 0d0231409361d9644a2c4f57178c103e, type: 3}
   - {fileID: 32900000, guid: 71bee6e6d905b2648b0793e1a3ba4719, type: 3}
   - {fileID: 32900000, guid: 2ca1478c95d27f648aee685b7c7a4006, type: 3}
+  - {fileID: 32900000, guid: 76cd8088fee488f45ac85a71bfd8605b, type: 3}
   audioRecorderScript: {fileID: 1594289843}
 --- !u!1 &843517135
 GameObject:
@@ -19965,6 +19966,12 @@ MonoBehaviour:
   - {fileID: 8300000, guid: 51762447a535c214a8721d3608bb2cda, type: 3}
   - {fileID: 8300000, guid: ed73386d46595364189287061b577a1b, type: 3}
   - {fileID: 8300000, guid: 8e117e415554c1848b631b007954fcd6, type: 3}
+  hitItClips:
+  - {fileID: 8300000, guid: 053e9f9a69b0f07499f6f654f2945223, type: 3}
+  - {fileID: 8300000, guid: cb5d17b27812321489baeef1d6e770b0, type: 3}
+  - {fileID: 8300000, guid: b232ec9cbf912124aa9196e0c599cd23, type: 3}
+  - {fileID: 8300000, guid: 0615cebe152f81a4fb1f05c1bbb31ab3, type: 3}
+  - {fileID: 8300000, guid: 1843356c99ff7b94d85876961e1382b7, type: 3}
   isPLaying: 0
 --- !u!4 &1594289844
 Transform:
@@ -23829,6 +23836,8 @@ MonoBehaviour:
       m_Image: {fileID: 0}
     - m_Text: Attraction
       m_Image: {fileID: 0}
+    - m_Text: Hit It
+      m_Image: {fileID: 0}
   m_OnValueChanged:
     m_PersistentCalls:
       m_Calls:
@@ -26178,6 +26187,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 708782158}
     m_Modifications:
+    - target: {fileID: 1870938896605422, guid: 835e735ca71bf78459fb2cababd74112, type: 3}
+      propertyPath: m_Name
+      value: OVRHandPrefab_Left
+      objectReference: {fileID: 0}
     - target: {fileID: 4453513310108136, guid: 835e735ca71bf78459fb2cababd74112, type: 3}
       propertyPath: m_RootOrder
       value: 1

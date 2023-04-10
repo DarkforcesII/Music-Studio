@@ -14,6 +14,7 @@ public class AudioRecorder : MonoBehaviour
     public AudioClip[] sunnyClips;
     public AudioClip[] staffrollClips;
     public AudioClip[] attractionClips;
+    public AudioClip[] hitItClips;
 
     public bool isPLaying = false;
 
@@ -86,6 +87,13 @@ public class AudioRecorder : MonoBehaviour
                     for (int i = 0; i < attractionClips.Length; i++)
                     {
                         audioSources[i + 1].clip = attractionClips[i];
+                        audioSources[i + 1].Play();
+                    }
+                    break;
+                case "Hit It":
+                    for (int i = 0; i < attractionClips.Length; i++)
+                    {
+                        audioSources[i + 1].clip = hitItClips[i];
                         audioSources[i + 1].Play();
                     }
                     break;

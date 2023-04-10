@@ -76,84 +76,167 @@ namespace OculusSampleFramework
 		{
 			var triggerZone = other.GetComponent<ButtonTriggerZone>();
 			if (triggerZone != null && (triggerZone.ParentInteractable.ValidToolTagsMask & (int)ToolTags) != 0)
+            {
+                CollidersTouchingUs.Add(triggerZone);
+
+                TriggerRightHandHaptics();
+                TriggerLeftHandHaptics();
+            }
+        }
+
+        private void TriggerLeftHandHaptics()
+        {
+			switch (name)
 			{
-				CollidersTouchingUs.Add(triggerZone);
+                #region
+                case "Hand_Thumb3_CapsuleRigidbody_Left":
+					BhapticsLibrary.PlayGlove(
+	positionType: PositionType.GloveL,
+	motorValues: new int[6] { 80, 0, 0, 0, 0, 0 },
+	playTimeValues: new GlovePlayTime[6] {
+						  GlovePlayTime.TwentyMS,
+						  GlovePlayTime.None,
+						  GlovePlayTime.None,
+						  GlovePlayTime.None,
+						  GlovePlayTime.None,
+						  GlovePlayTime.None},
+	shapeValues: new GloveShapeValue[6] { GloveShapeValue.LinearIncrease, 0, 0, 0, 0, 0 });
+					break;
+				case "Hand_Index3_CapsuleRigidbody_Left":
+					BhapticsLibrary.PlayGlove(
+	positionType: PositionType.GloveL,
+	motorValues: new int[6] { 0, 80, 0, 0, 0, 0 },
+	playTimeValues: new GlovePlayTime[6] {
+						  GlovePlayTime.None,
+						  GlovePlayTime.TwentyMS,
+						  GlovePlayTime.None,
+						  GlovePlayTime.None,
+						  GlovePlayTime.None,
+						  GlovePlayTime.None},
+	shapeValues: new GloveShapeValue[6] { 0, GloveShapeValue.LinearIncrease, 0, 0, 0, 0 });
+					break;
+				case "Hand_Middle3_CapsuleRigidbody_Left":
+					BhapticsLibrary.PlayGlove(
+	positionType: PositionType.GloveL,
+	motorValues: new int[6] { 0, 0, 80, 0, 0, 0 },
+	playTimeValues: new GlovePlayTime[6] {
+						  GlovePlayTime.None,
+						  0,
+						  GlovePlayTime.TwentyMS,
+						  0,
+						  GlovePlayTime.None,
+						  GlovePlayTime.None},
+	shapeValues: new GloveShapeValue[6] { 0, 0, GloveShapeValue.LinearIncrease, 0, 0, 0 });
+					break;
+				case "Hand_Ring3_CapsuleRigidbody_Left":
+					BhapticsLibrary.PlayGlove(
+	positionType: PositionType.GloveL,
+	motorValues: new int[6] { 0, 0, 0, 80, 0, 0 },
+	playTimeValues: new GlovePlayTime[6] {
+						  GlovePlayTime.None,
+						  0,
+						  0,
+						  GlovePlayTime.TwentyMS,
+						  0,
+						  GlovePlayTime.None},
+	shapeValues: new GloveShapeValue[6] { 0, 0, 0, GloveShapeValue.LinearIncrease, 0, 0 });
+					break;
+				case "Hand_Pinky3_CapsuleRigidbody_Left":
+					BhapticsLibrary.PlayGlove(
+	positionType: PositionType.GloveL,
+	motorValues: new int[6] { 0, 0, 0, 0, 80, 0 },
+	playTimeValues: new GlovePlayTime[6] {
+						  GlovePlayTime.None,
+						  0,
+						  0,
+						  0,
+						  GlovePlayTime.TwentyMS,
+						  GlovePlayTime.None},
+	shapeValues: new GloveShapeValue[6] { 0, 0, 0, 0, GloveShapeValue.LinearIncrease, 0 });
+					break;
+				default:
+					break;
+                    #endregion
+            }
+        }
 
-				// triggers haptics
-				switch (name)
-				{
-					case "Hand_Thumb3_CapsuleRigidbody":
-						BhapticsLibrary.PlayGlove(
-		positionType: PositionType.GloveR,
-		motorValues: new int[6] { 80, 0, 0, 0, 0, 0 },
-		playTimeValues: new GlovePlayTime[6] {
+        private void TriggerRightHandHaptics()
+        {
+            #region
+            switch (name)
+			{
+				case "Hand_Thumb3_CapsuleRigidbody":
+					BhapticsLibrary.PlayGlove(
+	positionType: PositionType.GloveR,
+	motorValues: new int[6] { 80, 0, 0, 0, 0, 0 },
+	playTimeValues: new GlovePlayTime[6] {
 						  GlovePlayTime.TwentyMS,
 						  GlovePlayTime.None,
 						  GlovePlayTime.None,
 						  GlovePlayTime.None,
 						  GlovePlayTime.None,
 						  GlovePlayTime.None},
-		shapeValues: new GloveShapeValue[6] { GloveShapeValue.LinearIncrease, 0, 0, 0, 0, 0 });
-						break;
-					case "Hand_Index3_CapsuleRigidbody":
-						BhapticsLibrary.PlayGlove(
-		positionType: PositionType.GloveR,
-		motorValues: new int[6] { 0, 80, 0, 0, 0, 0 },
-		playTimeValues: new GlovePlayTime[6] {
+	shapeValues: new GloveShapeValue[6] { GloveShapeValue.LinearIncrease, 0, 0, 0, 0, 0 });
+					break;
+				case "Hand_Index3_CapsuleRigidbody":
+					BhapticsLibrary.PlayGlove(
+	positionType: PositionType.GloveR,
+	motorValues: new int[6] { 0, 80, 0, 0, 0, 0 },
+	playTimeValues: new GlovePlayTime[6] {
 						  GlovePlayTime.None,
 						  GlovePlayTime.TwentyMS,
 						  GlovePlayTime.None,
 						  GlovePlayTime.None,
 						  GlovePlayTime.None,
 						  GlovePlayTime.None},
-		shapeValues: new GloveShapeValue[6] { 0, GloveShapeValue.LinearIncrease, 0, 0, 0, 0 });
-						break;
-					case "Hand_Middle3_CapsuleRigidbody":
-						BhapticsLibrary.PlayGlove(
-		positionType: PositionType.GloveR,
-		motorValues: new int[6] { 0, 0, 80, 0, 0, 0 },
-		playTimeValues: new GlovePlayTime[6] {
+	shapeValues: new GloveShapeValue[6] { 0, GloveShapeValue.LinearIncrease, 0, 0, 0, 0 });
+					break;
+				case "Hand_Middle3_CapsuleRigidbody":
+					BhapticsLibrary.PlayGlove(
+	positionType: PositionType.GloveR,
+	motorValues: new int[6] { 0, 0, 80, 0, 0, 0 },
+	playTimeValues: new GlovePlayTime[6] {
 						  GlovePlayTime.None,
 						  0,
 						  GlovePlayTime.TwentyMS,
 						  0,
 						  GlovePlayTime.None,
 						  GlovePlayTime.None},
-		shapeValues: new GloveShapeValue[6] { 0, 0, GloveShapeValue.LinearIncrease, 0, 0, 0 });
-						break;
-					case "Hand_Ring3_CapsuleRigidbody":
-						BhapticsLibrary.PlayGlove(
-		positionType: PositionType.GloveR,
-		motorValues: new int[6] { 0, 0, 0, 80, 0, 0 },
-		playTimeValues: new GlovePlayTime[6] {
+	shapeValues: new GloveShapeValue[6] { 0, 0, GloveShapeValue.LinearIncrease, 0, 0, 0 });
+					break;
+				case "Hand_Ring3_CapsuleRigidbody":
+					BhapticsLibrary.PlayGlove(
+	positionType: PositionType.GloveR,
+	motorValues: new int[6] { 0, 0, 0, 80, 0, 0 },
+	playTimeValues: new GlovePlayTime[6] {
 						  GlovePlayTime.None,
 						  0,
 						  0,
 						  GlovePlayTime.TwentyMS,
 						  0,
 						  GlovePlayTime.None},
-		shapeValues: new GloveShapeValue[6] { 0, 0, 0, GloveShapeValue.LinearIncrease, 0, 0 });
-						break;
-					case "Hand_Pinky3_CapsuleRigidbody":
-						BhapticsLibrary.PlayGlove(
-		positionType: PositionType.GloveR,
-		motorValues: new int[6] { 0, 0, 0, 0, 80, 0 },
-		playTimeValues: new GlovePlayTime[6] {
+	shapeValues: new GloveShapeValue[6] { 0, 0, 0, GloveShapeValue.LinearIncrease, 0, 0 });
+					break;
+				case "Hand_Pinky3_CapsuleRigidbody":
+					BhapticsLibrary.PlayGlove(
+	positionType: PositionType.GloveR,
+	motorValues: new int[6] { 0, 0, 0, 0, 80, 0 },
+	playTimeValues: new GlovePlayTime[6] {
 						  GlovePlayTime.None,
 						  0,
 						  0,
 						  0,
 						  GlovePlayTime.TwentyMS,
 						  GlovePlayTime.None},
-		shapeValues: new GloveShapeValue[6] { 0, 0, 0, 0, GloveShapeValue.LinearIncrease, 0 });
-						break;
-					default:
-						break;
-				}
-			}
-		}
+	shapeValues: new GloveShapeValue[6] { 0, 0, 0, 0, GloveShapeValue.LinearIncrease, 0 });
+					break;
+				default:
+					break;
+            }
+            #endregion
+        }
 
-		private void OnTriggerExit(Collider other)
+        private void OnTriggerExit(Collider other)
 		{
 			var triggerZone = other.GetComponent<ButtonTriggerZone>();
 			if (triggerZone != null && (triggerZone.ParentInteractable.ValidToolTagsMask & (int)ToolTags) != 0)
