@@ -37,11 +37,14 @@ namespace OculusSampleFramework
 		private List<ColliderZone> _elementsToCleanUp = new List<ColliderZone>();
 
 		private string _name;
+		private GameObject cameraRig;
+		private DebuggerHands debuggerScript;
 
         private void Start()
         {
-
 			_name = gameObject.name;
+			cameraRig = GameObject.Find("OGOVRCameraRig");
+			debuggerScript = cameraRig.GetComponent<DebuggerHands>();
         }
 
         /// <summary>
@@ -57,20 +60,10 @@ namespace OculusSampleFramework
 			CleanUpDeadColliders();
 		}
 
-		private void AddHaptics()
+		private void ChangeDebugText(string text)
         {
-			BhapticsLibrary.PlayGlove(
-		positionType: PositionType.GloveR,
-		motorValues: new int[6] { 0, 80, 0, 0, 0, 0},
-		playTimeValues: new GlovePlayTime[6] {
-						  GlovePlayTime.None,
-						  GlovePlayTime.TwentyMS,
-						  GlovePlayTime.None, 
-						  GlovePlayTime.None, 
-			              GlovePlayTime.None, 
-					      GlovePlayTime.None},
-		shapeValues: new GloveShapeValue[6] { 0, GloveShapeValue.LinearIncrease, 0, 0, 0, 0});
-		}
+			debuggerScript.text.text = text.ToString();
+        }
 
 		private void OnTriggerEnter(Collider other)
 		{
@@ -101,6 +94,7 @@ namespace OculusSampleFramework
 						  GlovePlayTime.None,
 						  GlovePlayTime.None},
 	shapeValues: new GloveShapeValue[6] { GloveShapeValue.LinearIncrease, 0, 0, 0, 0, 0 });
+					ChangeDebugText("Thumb");
 					break;
 				case "Hand_Index3_CapsuleRigidbody_Left":
 					BhapticsLibrary.PlayGlove(
@@ -114,6 +108,7 @@ namespace OculusSampleFramework
 						  GlovePlayTime.None,
 						  GlovePlayTime.None},
 	shapeValues: new GloveShapeValue[6] { 0, GloveShapeValue.LinearIncrease, 0, 0, 0, 0 });
+					ChangeDebugText("Index");
 					break;
 				case "Hand_Middle3_CapsuleRigidbody_Left":
 					BhapticsLibrary.PlayGlove(
@@ -127,6 +122,7 @@ namespace OculusSampleFramework
 						  GlovePlayTime.None,
 						  GlovePlayTime.None},
 	shapeValues: new GloveShapeValue[6] { 0, 0, GloveShapeValue.LinearIncrease, 0, 0, 0 });
+					ChangeDebugText("Middle");
 					break;
 				case "Hand_Ring3_CapsuleRigidbody_Left":
 					BhapticsLibrary.PlayGlove(
@@ -140,6 +136,7 @@ namespace OculusSampleFramework
 						  0,
 						  GlovePlayTime.None},
 	shapeValues: new GloveShapeValue[6] { 0, 0, 0, GloveShapeValue.LinearIncrease, 0, 0 });
+					ChangeDebugText("Ring");
 					break;
 				case "Hand_Pinky3_CapsuleRigidbody_Left":
 					BhapticsLibrary.PlayGlove(
@@ -153,6 +150,7 @@ namespace OculusSampleFramework
 						  GlovePlayTime.TwentyMS,
 						  GlovePlayTime.None},
 	shapeValues: new GloveShapeValue[6] { 0, 0, 0, 0, GloveShapeValue.LinearIncrease, 0 });
+					ChangeDebugText("Pinky");
 					break;
 				default:
 					break;
@@ -177,6 +175,7 @@ namespace OculusSampleFramework
 						  GlovePlayTime.None,
 						  GlovePlayTime.None},
 	shapeValues: new GloveShapeValue[6] { GloveShapeValue.LinearIncrease, 0, 0, 0, 0, 0 });
+					ChangeDebugText("Thumb");
 					break;
 				case "Hand_Index3_CapsuleRigidbody":
 					BhapticsLibrary.PlayGlove(
@@ -190,6 +189,7 @@ namespace OculusSampleFramework
 						  GlovePlayTime.None,
 						  GlovePlayTime.None},
 	shapeValues: new GloveShapeValue[6] { 0, GloveShapeValue.LinearIncrease, 0, 0, 0, 0 });
+					ChangeDebugText("Index");
 					break;
 				case "Hand_Middle3_CapsuleRigidbody":
 					BhapticsLibrary.PlayGlove(
@@ -203,6 +203,7 @@ namespace OculusSampleFramework
 						  GlovePlayTime.None,
 						  GlovePlayTime.None},
 	shapeValues: new GloveShapeValue[6] { 0, 0, GloveShapeValue.LinearIncrease, 0, 0, 0 });
+					ChangeDebugText("Middle");
 					break;
 				case "Hand_Ring3_CapsuleRigidbody":
 					BhapticsLibrary.PlayGlove(
@@ -216,6 +217,7 @@ namespace OculusSampleFramework
 						  0,
 						  GlovePlayTime.None},
 	shapeValues: new GloveShapeValue[6] { 0, 0, 0, GloveShapeValue.LinearIncrease, 0, 0 });
+					ChangeDebugText("Ring");
 					break;
 				case "Hand_Pinky3_CapsuleRigidbody":
 					BhapticsLibrary.PlayGlove(
@@ -229,6 +231,7 @@ namespace OculusSampleFramework
 						  GlovePlayTime.TwentyMS,
 						  GlovePlayTime.None},
 	shapeValues: new GloveShapeValue[6] { 0, 0, 0, 0, GloveShapeValue.LinearIncrease, 0 });
+					ChangeDebugText("Pinky");
 					break;
 				default:
 					break;
