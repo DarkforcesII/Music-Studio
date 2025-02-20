@@ -8,15 +8,12 @@
 
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using Facebook.WitAi.Configuration;
-using Facebook.WitAi.Data.Configuration;
-using Facebook.WitAi.TTS.Data;
-using Facebook.WitAi.TTS.Editor.Preload;
+using Meta.WitAi.TTS.Data;
+using Meta.WitAi.Utilities;
 using UnityEditor;
 using UnityEngine;
 
-namespace Facebook.WitAi.TTS.Editor
+namespace Meta.WitAi.TTS.Preload
 {
     [CustomEditor(typeof(TTSPreloadSettings), true)]
     public class TTSPreloadSettingsInspector : UnityEditor.Editor
@@ -31,7 +28,8 @@ namespace Facebook.WitAi.TTS.Editor
         // Layout items
         public const float ACTION_BTN_INDENT = 15f;
         public virtual Texture2D HeaderIcon => WitTexts.HeaderIcon;
-        public virtual string HeaderUrl => WitTexts.GetAppURL(WitConfigurationUtility.GetAppID(null), WitTexts.WitAppEndpointType.Settings);
+        public virtual string HeaderUrl => WitTexts.GetAppURL(string.Empty, WitTexts.WitAppEndpointType.Settings);
+        public virtual string DocsUrl => WitTexts.Texts.WitDocsUrl;
 
         // Layout
         public override void OnInspectorGUI()
@@ -43,7 +41,7 @@ namespace Facebook.WitAi.TTS.Editor
             }
 
             // Draw header
-            WitEditorUI.LayoutHeaderButton(HeaderIcon, HeaderUrl);
+            WitEditorUI.LayoutHeaderButton(HeaderIcon, HeaderUrl, DocsUrl);
             GUILayout.Space(WitStyles.HeaderPaddingBottom);
 
             // Layout actions
@@ -60,22 +58,31 @@ namespace Facebook.WitAi.TTS.Editor
 
             // Indent
             EditorGUI.indentLevel++;
-
-            // Get TTS Service if needed
             EditorGUILayout.Space();
-            TtsService = EditorGUILayout.ObjectField("TTS Service", TtsService, typeof(TTSService), true) as TTSService;
-            if (TtsService == null)
+
+            // Hide when playing
+            if (Application.isPlaying)
             {
-                if (!Application.isPlaying)
-                {
-                    EditorUtility.ClearProgressBar();
-                    TtsService = GameObject.FindObjectOfType<TTSService>();
-                }
-                WitEditorUI.LayoutErrorLabel("You must add a TTS Service to the loaded scene in order perform TTS actions.");
+                EditorUtility.ClearProgressBar();
+                WitEditorUI.LayoutErrorLabel("TTS preload actions cannot be performed at runtime.");
                 EditorGUI.indentLevel--;
                 return;
             }
-            if (TtsService != null && _ttsVoiceIDs == null)
+
+            // Get TTS Service if needed
+            TtsService = EditorGUILayout.ObjectField("TTS Service", TtsService, typeof(TTSService), true) as TTSService;
+            if (TtsService == null)
+            {
+                TtsService = GameObjectSearchUtility.FindSceneObject<TTSService>(true);
+                if (TtsService == null)
+                {
+                    EditorUtility.ClearProgressBar();
+                    WitEditorUI.LayoutErrorLabel("You must add a TTS Service to the loaded scene in order perform TTS actions.");
+                    EditorGUI.indentLevel--;
+                    return;
+                }
+            }
+            if (_ttsVoiceIDs == null)
             {
                 _ttsVoiceIDs = GetVoiceIDs(TtsService);
             }
@@ -95,6 +102,15 @@ namespace Facebook.WitAi.TTS.Editor
             {
                 EditorUtility.ClearProgressBar();
                 if (TTSPreloadUtility.ImportData(Settings))
+                {
+                    RefreshData();
+                }
+            }
+            GUILayout.Space(ACTION_BTN_INDENT);
+            if (WitEditorUI.LayoutTextButton("Import AutoLoader Data"))
+            {
+                EditorUtility.ClearProgressBar();
+                if (TTSPreloadUtility.ImportPhrases(Settings))
                 {
                     RefreshData();
                 }
@@ -452,10 +468,10 @@ namespace Facebook.WitAi.TTS.Editor
             {
                 foreach (var voiceSetting in service.GetAllPresetVoiceSettings())
                 {
-                    if (voiceSetting != null && !string.IsNullOrEmpty(voiceSetting.settingsID) &&
-                        !results.Contains(voiceSetting.settingsID))
+                    if (voiceSetting != null && !string.IsNullOrEmpty(voiceSetting.SettingsId) &&
+                        !results.Contains(voiceSetting.SettingsId))
                     {
-                        results.Add(voiceSetting.settingsID);
+                        results.Add(voiceSetting.SettingsId);
                     }
                 }
             }

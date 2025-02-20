@@ -6,13 +6,23 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-namespace Facebook.WitAi.TTS.Data
+using UnityEngine;
+using UnityEngine.Serialization;
+
+namespace Meta.WitAi.TTS.Data
 {
     public abstract class TTSVoiceSettings
     {
-        /// <summary>
-        /// The unique voice settings id
-        /// </summary>
-        public string settingsID;
+        [Tooltip("A unique id used for linking these voice settings to a TTS Speaker")]
+        [FormerlySerializedAs("settingsID")]
+        public string SettingsId;
+
+        [Tooltip("Text that is added to the front of any TTS request using this voice setting")]
+        [TextArea]
+        public string PrependedText;
+
+        [TextArea]
+        [Tooltip("Text that is added to the end of any TTS request using this voice setting")]
+        public string AppendedText;
     }
 }

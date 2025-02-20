@@ -21,252 +21,70 @@
 
 using System.Collections.Generic;
 using UnityEngine;
-using Bhaptics.SDK2;
 
 namespace OculusSampleFramework
 {
-	/// <summary>
-	/// Allows a bone to keep track of interactables that it has touched. This information
-	/// can be used by a tool.
-	/// </summary>
-	public class BoneCapsuleTriggerLogic : MonoBehaviour
-	{
-		public InteractableToolTags ToolTags;
+    /// <summary>
+    /// Allows a bone to keep track of interactables that it has touched. This information
+    /// can be used by a tool.
+    /// </summary>
+    public class BoneCapsuleTriggerLogic : MonoBehaviour
+    {
+        public InteractableToolTags ToolTags;
 
-		public HashSet<ColliderZone> CollidersTouchingUs = new HashSet<ColliderZone>();
-		private List<ColliderZone> _elementsToCleanUp = new List<ColliderZone>();
-
-		private string _name;
-		private GameObject cameraRig;
-		private DebuggerHands debuggerScript;
-
-        private void Start()
-        {
-			_name = gameObject.name;
-			cameraRig = GameObject.Find("OGOVRCameraRig");
-			debuggerScript = cameraRig.GetComponent<DebuggerHands>();
-        }
+        public HashSet<ColliderZone> CollidersTouchingUs = new HashSet<ColliderZone>();
+        private List<ColliderZone> _elementsToCleanUp = new List<ColliderZone>();
 
         /// <summary>
         /// If we get disabled, clear our colliders. Otherwise, on trigger exit may not get called.
         /// </summary>
         private void OnDisable()
-		{
-			CollidersTouchingUs.Clear();
-		}
-
-		private void Update()
-		{
-			CleanUpDeadColliders();
-		}
-
-		private void ChangeDebugText(string text)
         {
-			debuggerScript.text.text = text.ToString();
+            CollidersTouchingUs.Clear();
         }
 
-		private void OnTriggerEnter(Collider other)
-		{
-			var triggerZone = other.GetComponent<ButtonTriggerZone>();
-			if (triggerZone != null && (triggerZone.ParentInteractable.ValidToolTagsMask & (int)ToolTags) != 0)
+        private void Update()
+        {
+            CleanUpDeadColliders();
+        }
+
+        private void OnTriggerEnter(Collider other)
+        {
+            var triggerZone = other.GetComponent<ButtonTriggerZone>();
+            if (triggerZone != null && (triggerZone.ParentInteractable.ValidToolTagsMask & (int)ToolTags) != 0)
             {
                 CollidersTouchingUs.Add(triggerZone);
-
-                TriggerRightHandHaptics();
-                TriggerLeftHandHaptics();
             }
-        }
-
-        private void TriggerLeftHandHaptics()
-        {
-			switch (name)
-			{
-                #region
-                case "Hand_Thumb3_CapsuleRigidbody_Left":
-					BhapticsLibrary.PlayGlove(
-	positionType: PositionType.GloveL,
-	motorValues: new int[6] { 80, 0, 0, 0, 0, 0 },
-	playTimeValues: new GlovePlayTime[6] {
-						  GlovePlayTime.TwentyMS,
-						  GlovePlayTime.None,
-						  GlovePlayTime.None,
-						  GlovePlayTime.None,
-						  GlovePlayTime.None,
-						  GlovePlayTime.None},
-	shapeValues: new GloveShapeValue[6] { GloveShapeValue.LinearIncrease, 0, 0, 0, 0, 0 });
-					ChangeDebugText("Thumb");
-					break;
-				case "Hand_Index3_CapsuleRigidbody_Left":
-					BhapticsLibrary.PlayGlove(
-	positionType: PositionType.GloveL,
-	motorValues: new int[6] { 0, 80, 0, 0, 0, 0 },
-	playTimeValues: new GlovePlayTime[6] {
-						  GlovePlayTime.None,
-						  GlovePlayTime.TwentyMS,
-						  GlovePlayTime.None,
-						  GlovePlayTime.None,
-						  GlovePlayTime.None,
-						  GlovePlayTime.None},
-	shapeValues: new GloveShapeValue[6] { 0, GloveShapeValue.LinearIncrease, 0, 0, 0, 0 });
-					ChangeDebugText("Index");
-					break;
-				case "Hand_Middle3_CapsuleRigidbody_Left":
-					BhapticsLibrary.PlayGlove(
-	positionType: PositionType.GloveL,
-	motorValues: new int[6] { 0, 0, 80, 0, 0, 0 },
-	playTimeValues: new GlovePlayTime[6] {
-						  GlovePlayTime.None,
-						  0,
-						  GlovePlayTime.TwentyMS,
-						  0,
-						  GlovePlayTime.None,
-						  GlovePlayTime.None},
-	shapeValues: new GloveShapeValue[6] { 0, 0, GloveShapeValue.LinearIncrease, 0, 0, 0 });
-					ChangeDebugText("Middle");
-					break;
-				case "Hand_Ring3_CapsuleRigidbody_Left":
-					BhapticsLibrary.PlayGlove(
-	positionType: PositionType.GloveL,
-	motorValues: new int[6] { 0, 0, 0, 80, 0, 0 },
-	playTimeValues: new GlovePlayTime[6] {
-						  GlovePlayTime.None,
-						  0,
-						  0,
-						  GlovePlayTime.TwentyMS,
-						  0,
-						  GlovePlayTime.None},
-	shapeValues: new GloveShapeValue[6] { 0, 0, 0, GloveShapeValue.LinearIncrease, 0, 0 });
-					ChangeDebugText("Ring");
-					break;
-				case "Hand_Pinky3_CapsuleRigidbody_Left":
-					BhapticsLibrary.PlayGlove(
-	positionType: PositionType.GloveL,
-	motorValues: new int[6] { 0, 0, 0, 0, 80, 0 },
-	playTimeValues: new GlovePlayTime[6] {
-						  GlovePlayTime.None,
-						  0,
-						  0,
-						  0,
-						  GlovePlayTime.TwentyMS,
-						  GlovePlayTime.None},
-	shapeValues: new GloveShapeValue[6] { 0, 0, 0, 0, GloveShapeValue.LinearIncrease, 0 });
-					ChangeDebugText("Pinky");
-					break;
-				default:
-					break;
-                    #endregion
-            }
-        }
-
-        private void TriggerRightHandHaptics()
-        {
-            #region
-            switch (name)
-			{
-				case "Hand_Thumb3_CapsuleRigidbody":
-					BhapticsLibrary.PlayGlove(
-	positionType: PositionType.GloveR,
-	motorValues: new int[6] { 80, 0, 0, 0, 0, 0 },
-	playTimeValues: new GlovePlayTime[6] {
-						  GlovePlayTime.TwentyMS,
-						  GlovePlayTime.None,
-						  GlovePlayTime.None,
-						  GlovePlayTime.None,
-						  GlovePlayTime.None,
-						  GlovePlayTime.None},
-	shapeValues: new GloveShapeValue[6] { GloveShapeValue.LinearIncrease, 0, 0, 0, 0, 0 });
-					ChangeDebugText("Thumb");
-					break;
-				case "Hand_Index3_CapsuleRigidbody":
-					BhapticsLibrary.PlayGlove(
-	positionType: PositionType.GloveR,
-	motorValues: new int[6] { 0, 80, 0, 0, 0, 0 },
-	playTimeValues: new GlovePlayTime[6] {
-						  GlovePlayTime.None,
-						  GlovePlayTime.TwentyMS,
-						  GlovePlayTime.None,
-						  GlovePlayTime.None,
-						  GlovePlayTime.None,
-						  GlovePlayTime.None},
-	shapeValues: new GloveShapeValue[6] { 0, GloveShapeValue.LinearIncrease, 0, 0, 0, 0 });
-					ChangeDebugText("Index");
-					break;
-				case "Hand_Middle3_CapsuleRigidbody":
-					BhapticsLibrary.PlayGlove(
-	positionType: PositionType.GloveR,
-	motorValues: new int[6] { 0, 0, 80, 0, 0, 0 },
-	playTimeValues: new GlovePlayTime[6] {
-						  GlovePlayTime.None,
-						  0,
-						  GlovePlayTime.TwentyMS,
-						  0,
-						  GlovePlayTime.None,
-						  GlovePlayTime.None},
-	shapeValues: new GloveShapeValue[6] { 0, 0, GloveShapeValue.LinearIncrease, 0, 0, 0 });
-					ChangeDebugText("Middle");
-					break;
-				case "Hand_Ring3_CapsuleRigidbody":
-					BhapticsLibrary.PlayGlove(
-	positionType: PositionType.GloveR,
-	motorValues: new int[6] { 0, 0, 0, 80, 0, 0 },
-	playTimeValues: new GlovePlayTime[6] {
-						  GlovePlayTime.None,
-						  0,
-						  0,
-						  GlovePlayTime.TwentyMS,
-						  0,
-						  GlovePlayTime.None},
-	shapeValues: new GloveShapeValue[6] { 0, 0, 0, GloveShapeValue.LinearIncrease, 0, 0 });
-					ChangeDebugText("Ring");
-					break;
-				case "Hand_Pinky3_CapsuleRigidbody":
-					BhapticsLibrary.PlayGlove(
-	positionType: PositionType.GloveR,
-	motorValues: new int[6] { 0, 0, 0, 0, 80, 0 },
-	playTimeValues: new GlovePlayTime[6] {
-						  GlovePlayTime.None,
-						  0,
-						  0,
-						  0,
-						  GlovePlayTime.TwentyMS,
-						  GlovePlayTime.None},
-	shapeValues: new GloveShapeValue[6] { 0, 0, 0, 0, GloveShapeValue.LinearIncrease, 0 });
-					ChangeDebugText("Pinky");
-					break;
-				default:
-					break;
-            }
-            #endregion
         }
 
         private void OnTriggerExit(Collider other)
-		{
-			var triggerZone = other.GetComponent<ButtonTriggerZone>();
-			if (triggerZone != null && (triggerZone.ParentInteractable.ValidToolTagsMask & (int)ToolTags) != 0)
-			{
-				CollidersTouchingUs.Remove(triggerZone);
-			}
-		}
+        {
+            var triggerZone = other.GetComponent<ButtonTriggerZone>();
+            if (triggerZone != null && (triggerZone.ParentInteractable.ValidToolTagsMask & (int)ToolTags) != 0)
+            {
+                CollidersTouchingUs.Remove(triggerZone);
+            }
+        }
 
-		/// <summary>
-		/// Sometimes colliders get disabled and trigger exit doesn't get called.
-		/// Take care of that edge case.
-		/// </summary>
-		private void CleanUpDeadColliders()
-		{
-			_elementsToCleanUp.Clear();
-			foreach (ColliderZone colliderTouching in CollidersTouchingUs)
-			{
-				if (!colliderTouching.Collider.gameObject.activeInHierarchy)
-				{
-					_elementsToCleanUp.Add(colliderTouching);
-				}
-			}
+        /// <summary>
+        /// Sometimes colliders get disabled and trigger exit doesn't get called.
+        /// Take care of that edge case.
+        /// </summary>
+        private void CleanUpDeadColliders()
+        {
+            _elementsToCleanUp.Clear();
+            foreach (ColliderZone colliderTouching in CollidersTouchingUs)
+            {
+                if (!colliderTouching.Collider.gameObject.activeInHierarchy)
+                {
+                    _elementsToCleanUp.Add(colliderTouching);
+                }
+            }
 
-			foreach (ColliderZone colliderZone in _elementsToCleanUp)
-			{
-				CollidersTouchingUs.Remove(colliderZone);
-			}
-		}
-	}
+            foreach (ColliderZone colliderZone in _elementsToCleanUp)
+            {
+                CollidersTouchingUs.Remove(colliderZone);
+            }
+        }
+    }
 }
