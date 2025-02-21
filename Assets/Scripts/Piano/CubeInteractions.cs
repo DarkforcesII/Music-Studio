@@ -23,8 +23,8 @@ public class CubeInteractions : Interactable
         {
 
             FingerTipPokeTool tool = (FingerTipPokeTool)interactableTool;
-            OVRPlugin.HandFinger _fingerToFollow = tool._fingerToFollow;
-
+            //OVRPlugin.HandFinger _fingerToFollow = tool._fingerToFollow;
+            /*
             switch (_fingerToFollow)
             {
                 case OVRPlugin.HandFinger.Thumb:
@@ -45,7 +45,7 @@ public class CubeInteractions : Interactable
                 default:
                     m_renderer.material.color = Color.white;
                     break;
-            }
+            }*/
         }
         else
         {
