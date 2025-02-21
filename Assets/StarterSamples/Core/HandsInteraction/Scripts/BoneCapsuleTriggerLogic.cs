@@ -36,6 +36,11 @@ namespace OculusSampleFramework
         public HashSet<ColliderZone> CollidersTouchingUs = new HashSet<ColliderZone>();
         private List<ColliderZone> _elementsToCleanUp = new List<ColliderZone>();
 
+		// used to find name of finger
+        private string _name;
+
+        private void Start() => _name = gameObject.name;
+
         /// <summary>
         /// If we get disabled, clear our colliders. Otherwise, on trigger exit may not get called.
         /// </summary>
