@@ -11,6 +11,9 @@ EditorBuildSettings:
   - enabled: 0
     path: Assets/StarterSamples/Usage/HandsInteractionTrainScene.unity
     guid: a9c41884ef0c347628dfd8a4af4a022e
+  - enabled: 0
+    path: Assets/Samples/Meta XR Interaction SDK Essentials/72.0.0/UnityXR Integration/Scenes/UnityXRComprehensiveRigExample.unity
+    guid: 1c3839a1070e4a14ab46e590c49bec68
   m_configObjects:
     Unity.XR.Oculus.Settings: {fileID: 11400000, guid: b48a2d776e8e4824da950d2ee77969db, type: 2}
     com.unity.xr.management.loader_settings: {fileID: 11400000, guid: 7440bd9ad4232fc4182989672ce3a6ae, type: 2}
